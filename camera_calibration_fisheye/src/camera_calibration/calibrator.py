@@ -615,7 +615,7 @@ class MonoCalibrator(Calibrator):
         self.intrinsics[0,0] = 1.0
         self.intrinsics[1,1] = 1.0
         
-        calibration_flags = cv2.fisheye.CALIB_RECOMPUTE_EXTRINSIC+cv2.fisheye.CALIB_CHECK_COND+cv2.fisheye.CALIB_FIX_SKEW
+        calibration_flags = cv2.fisheye.CALIB_RECOMPUTE_EXTRINSIC+cv2.fisheye.CALIB_FIX_SKEW
         
         rvecs = [numpy.zeros((1, 1, 3), dtype=numpy.float64) for i in range(len(opts))]
         tvecs = [numpy.zeros((1, 1, 3), dtype=numpy.float64) for i in range(len(opts))]
