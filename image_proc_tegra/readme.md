@@ -45,10 +45,11 @@ Rectification using OpenCV 3 fisheye camera rectification implementation. Works 
 example launch file:
 ```
   <!-- nodelet manager from image stream -->
-  <node pkg="nodelet" type="nodelet" name="image_proc_tegra_fisheye"  args="manager" />
-  <node pkg="nodelet" type="nodelet" name="image_proc_test" args="load image_proc_tegra_fisheye/RectifyNodelet camera_nodelet_manager" output="screen">
-    <remap from="camera_info" to="/camera/color/camera_info" />
-    <remap from="image_raw" to="/camera/color/image_raw" />
-    <remap from="image_rect" to="/camera/color/image_rect" />
-  </node>
+<node pkg="nodelet" type="nodelet" name="image_proc_tegra_fisheye_cam0"  args="manager" />
+<node pkg="nodelet" type="nodelet" name="image_proc_cam0" args="load image_proc_tegra_fisheye/RectifyNodelet image_proc_tegra_fisheye_cam0" output="screen">
+    <remap from="camera_info" to="cam0/camera_info" />
+    <remap from="image_raw" to="cam0/image_raw" />
+    <remap from="image_rect" to="cam0/image_rect" />
+    <remap from="/camera_nodelet_manager/load_nodelet" to="/image_proc_tegra_fisheye_cam0/load_nodelet" />
+</node>
 ```
