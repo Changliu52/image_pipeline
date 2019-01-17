@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(image_proc_tegra)
 set (CMAKE_CXX_STANDARD 11)
 
+find_package(CUDA REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
   image_transport
   sensor_msgs
@@ -28,7 +29,6 @@ catkin_package(
   LIBRARIES ${PROJECT_NAME}
 )
 
-
 message(WARNING "OpenCV_VERSION: ${OpenCV_VERSION}")
 message(WARNING "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
 message(WARNING "OpenCV_LIBRARIES: ${OpenCV_LIBRARIES}")
@@ -37,11 +37,21 @@ message(WARNING "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 message(WARNING "LD_LIBRARY_PATH: ${LD_LIBRARY_PATH}")
 message(WARNING "_include_dirs: ${_include_dirs}")
 
-include_directories(SYSTEM ${OpenCV_INCLUDE_DIRS} ${cv_bridge_INCLUDE_DIRS} ${image_geometry_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+include_directories(SYSTEM 
+${OpenCV_INCLUDE_DIRS}
+${cv_bridge_INCLUDE_DIRS}
+${image_geometry_INCLUDE_DIRS}
+${catkin_INCLUDE_DIRS}
+${CUDA_INCLUDE_DIRS})
 include_directories(include)
 
 add_library(${PROJECT_NAME}     src/nodelets/rectify.cpp )
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBRARIES} ${cv_bridge_LIBRARIES} ${image_geometry_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}
+${OpenCV_LIBRARIES}
+${cv_bridge_LIBRARIES}
+${image_geometry_LIBRARIES}
+${catkin_LIBRARIES}
+${CUDA_LIBRARIES})
 
 add_executable(image_proc_tegra_exe src/image_proc_tegra.cpp)
 
